@@ -58,7 +58,7 @@ public class EventParams
 	/// incoming data value
 	/// </summary>
 	[JsonPropertyName("value")]
-	public NumberOrNumberArray? Value { get; set; }
+	public NumberOrStringArray? Value { get; set; }
 	
 	/// <summary>
 	/// color of the shape, works when componentType is 'series'.

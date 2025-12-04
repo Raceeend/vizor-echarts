@@ -43,7 +43,19 @@ public class NumberOrStringConverter : JsonConverter<NumberOrString>
 
 	public override NumberOrString Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
-		throw new NotImplementedException("Deserialization is not implemented for NumberOrString.");
+        if (reader.TokenType == JsonTokenType.String)
+        {
+			var str = reader.GetString();
+            return new NumberOrString(str ?? string.Empty);
+        }
+        else if (reader.TokenType == JsonTokenType.Number)
+        {
+			return new NumberOrString(reader.GetDouble());
+        }
+		else
+		{
+            throw new JsonException("Number or String.");
+		}
 	}
 
 	public override void Write(Utf8JsonWriter writer, NumberOrString value, JsonSerializerOptions options)

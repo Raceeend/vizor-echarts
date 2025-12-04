@@ -48,8 +48,45 @@ public class NumberOrStringArrayConverter : JsonConverter<NumberOrStringArray>
 {
 	public override NumberOrStringArray Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 	{
-		throw new NotImplementedException("Deserialization is not implemented for NumberOrStringArray.");
-	}
+        if (reader.TokenType == JsonTokenType.String)
+        {
+            var str = reader.GetString();
+            return new NumberOrString(str ?? string.Empty);
+        }
+        else if (reader.TokenType == JsonTokenType.Number)
+        {
+            return new NumberOrString(reader.GetDouble());
+        }
+        else if (reader.TokenType == JsonTokenType.StartArray)
+        {
+            var num_string = new List<NumberOrString>();
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndArray)
+                {
+                    break;
+                }
+
+                if (reader.TokenType == JsonTokenType.Number)
+                {
+                    num_string.Add(new NumberOrString(reader.GetDouble()));
+                }
+                else if (reader.TokenType == JsonTokenType.String)
+				{
+					num_string.Add(new NumberOrString(reader.GetString() ?? string.Empty));
+				}
+                else
+                {
+                    throw new JsonException("Expected number or in the array.");
+                }
+            }
+			return new NumberOrStringArray(num_string.ToArray());
+		}
+		else
+		{
+			throw new JsonException("Unexpected token type.");
+        }
+    }
 
 	public override void Write(Utf8JsonWriter writer, NumberOrStringArray value, JsonSerializerOptions options)
 	{
