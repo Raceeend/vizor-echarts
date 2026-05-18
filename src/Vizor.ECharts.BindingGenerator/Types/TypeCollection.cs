@@ -14,6 +14,8 @@ internal class TypeCollection
     public TypeCollection()
     {
         AddMappedEnumType(new MappedEnumType("align", typeof(HorizontalAlign)));
+        AddMappedEnumType(new MappedEnumType("alignMinLabel", typeof(HorizontalAlign)));
+        AddMappedEnumType(new MappedEnumType("alignMaxLabel", typeof(HorizontalAlign)));
         AddMappedEnumType(new MappedEnumType("animationEasing", typeof(AnimationEasing)));
         AddMappedEnumType(new MappedEnumType("animationEasingUpdate", typeof(AnimationEasing)));
         AddMappedEnumType(new MappedEnumType("animationType", typeof(AnimationType)));
@@ -65,6 +67,8 @@ internal class TypeCollection
         AddMappedEnumType(new MappedEnumType("triggerOn", typeof(TriggerOn)));
         AddMappedEnumType(new MappedEnumType("treeLayout", typeof(TreeLayout)));
         AddMappedEnumType(new MappedEnumType("verticalAlign", typeof(VerticalAlign)));
+        AddMappedEnumType(new MappedEnumType("verticalAlignMinLabel", typeof(VerticalAlign)));
+        AddMappedEnumType(new MappedEnumType("verticalAlignMaxLabel", typeof(VerticalAlign)));
 
 
 

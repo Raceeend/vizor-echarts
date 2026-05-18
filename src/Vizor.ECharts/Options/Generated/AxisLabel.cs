@@ -249,7 +249,7 @@ public partial class AxisLabel
     /// ]]>
     /// </summary>
     [JsonPropertyName("alignMinLabel")]
-    public string? AlignMinLabel { get; set; } 
+    public HorizontalAlign? AlignMinLabel { get; set; } 
 
     /// <summary>
     /// <![CDATA[
@@ -262,7 +262,7 @@ public partial class AxisLabel
     /// ]]>
     /// </summary>
     [JsonPropertyName("alignMaxLabel")]
-    public string? AlignMaxLabel { get; set; } 
+    public HorizontalAlign? AlignMaxLabel { get; set; } 
 
     /// <summary>
     /// Since v5.2.0   
@@ -692,7 +692,7 @@ public partial class AxisLabel
     /// ]]>
     /// </summary>
     [JsonPropertyName("verticalAlignMinLabel")]
-    public string? VerticalAlignMinLabel { get; set; } 
+    public VerticalAlign? VerticalAlignMinLabel { get; set; } 
 
     /// <summary>
     /// <![CDATA[
@@ -705,7 +705,7 @@ public partial class AxisLabel
     /// ]]>
     /// </summary>
     [JsonPropertyName("verticalAlignMaxLabel")]
-    public string? VerticalAlignMaxLabel { get; set; } 
+    public VerticalAlign? VerticalAlignMaxLabel { get; set; } 
 
     /// <summary>
     /// The distance between the label and tick line.

@@ -459,6 +459,7 @@ public partial class CandlestickSeries : ISeries
     public string? DataGroupId { get; set; } 
 
     /// <summary>
+    /// <![CDATA[
     /// Data should be the two-dimensional array shown as follows.
     ///  [
     ///     [2320.26, 2320.26, 2287.3,  2362.94],
@@ -470,7 +471,24 @@ public partial class CandlestickSeries : ISeries
     ///     ...
     /// ]  
     /// Every data item (each line in the example above) represents a box, which contains 4 values.
-    /// They are:  [open, close, lowest, highest]  (namely: [opening value, closing value, lowest value, highest value])
+    /// They are:  [open, close, lowest, highest]  (namely: [opening value, closing value, lowest value, highest value])  
+    /// That means the default dimension order of candlestick is OCLH .
+    /// If your source data is in the OHLC order ( [open, highest, lowest, close] ), you can explicitly remap dimensions via series-candlestick.encode .
+    /// This applies to both dataset and series.data .
+    ///  
+    /// For example, if each item in series.data is [open, high, low, close] , you can configure:  series: [{
+    ///     type: 'candlestick',
+    ///     data: [
+    ///         // [date, open, high, low, close]
+    ///         ['2025-05-01', 2320.26, 2362.94, 2287.3, 2320.26],
+    ///         ['2025-05-02', 2300, 2308.38, 2288.26, 2291.3]
+    ///     ],
+    ///     encode: {
+    ///         x: 0,
+    ///         y: [1, 4, 3, 2] // Remap OHLC to OCLH without reordering the source data array
+    ///     }
+    /// }]
+    /// ]]>
     /// </summary>
     [JsonPropertyName("data")]
     public object? Data { get; set; } 

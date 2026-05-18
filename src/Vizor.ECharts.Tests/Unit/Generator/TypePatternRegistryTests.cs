@@ -264,4 +264,22 @@ public class TypePatternRegistryTests
         Assert.Contains("Add enum", suggestion, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("MappedEnumType", suggestion);
     }
+
+    [TestMethod]
+    public void TypeCollection_MapsAxisLabelMinMaxAlignmentEnums()
+    {
+        var alignMinMapped = typeCollection.TryGetMappedEnumType("alignMinLabel", "axisLabel", out var alignMinType);
+        var alignMaxMapped = typeCollection.TryGetMappedEnumType("alignMaxLabel", "axisLabel", out var alignMaxType);
+        var verticalMinMapped = typeCollection.TryGetMappedEnumType("verticalAlignMinLabel", "axisLabel", out var verticalMinType);
+        var verticalMaxMapped = typeCollection.TryGetMappedEnumType("verticalAlignMaxLabel", "axisLabel", out var verticalMaxType);
+
+        Assert.IsTrue(alignMinMapped);
+        Assert.IsTrue(alignMaxMapped);
+        Assert.IsTrue(verticalMinMapped);
+        Assert.IsTrue(verticalMaxMapped);
+        Assert.AreEqual("HorizontalAlign", alignMinType?.DotNetType);
+        Assert.AreEqual("HorizontalAlign", alignMaxType?.DotNetType);
+        Assert.AreEqual("VerticalAlign", verticalMinType?.DotNetType);
+        Assert.AreEqual("VerticalAlign", verticalMaxType?.DotNetType);
+    }
 }

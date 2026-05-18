@@ -103,14 +103,14 @@ public partial class Geo
     /// If you intend to adjust the position and size of source map by viewport coordinates, use geo.left / .right / .top / .bottom / .width / .height or geo.layoutCenter / layoutSize .
     ///  
     /// center is in longitude and latitude by default.
-    /// Use the projected coordinates if proejction is set.
+    /// Use the projected coordinates if projection is set.
     ///  
     /// Example:  // Place this [lng, lat] at the center of the viewport (canvas).
     /// center: [115.97, 29.71]  projection: {
     ///     projection: (pt) => project(pt)
     /// },
     /// center: project([115.97, 29.71])  
-    /// A percentage string can also be used in center , like '30%' , based on the bounding rect(determined min/max latitude/longitude, or min/max projected coordinates if proejction is set).
+    /// A percentage string can also be used in center , like '30%' , based on the bounding rect(determined min/max latitude/longitude, or min/max projected coordinates if projection is set).
     /// You can use '0%' to place the top or left of bounding rect to the center of the viewport (typically, canvas), or use '100%' to place the right or bottom to the center of the viewport, or use '50%' to place the entire source map at the the center of the viewport.
     /// For example:  center: [115, '30%']
     /// // Place the top of source map to the center of the viewport (canvas)
@@ -192,11 +192,11 @@ public partial class Geo
 
     /// <summary>
     /// Used to scale aspect of geo.
-    /// It will be ignored if proejction is set.
+    /// It will be ignored if projection is set.
     ///  
-    /// The final calculated pixelWidth and pixelHeight of the map will satisfy pixelWidth / pixelHeight = lngSpan / latSpan * aspectScale (assume proejction is not specified, and preserveAspect is truthy).
+    /// The final calculated pixelWidth and pixelHeight of the map will satisfy pixelWidth / pixelHeight = lngSpan / latSpan * aspectScale (assume projection is not specified, and preserveAspect is truthy).
     ///  
-    /// If no proejction is applied, the latitudes and longitudes in GeoJSON are linearly mapped to pixel coordinates diarectly.
+    /// If no projection is applied, the latitudes and longitudes in GeoJSON are linearly mapped to pixel coordinates diarectly.
     /// aspectScale offers a simple way to visually compensates for the distortion caused by the fact that the longitudinal spacing shrinks as latitude increases.
     /// For example, an aspectScale can be roughly calculated as aspectScale = Math.cos(center_latitude * Maht.PI / 180) , which is similar to a sinusoidal projection.
     ///  

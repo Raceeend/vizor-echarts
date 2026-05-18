@@ -280,15 +280,16 @@ public partial class LineSeries : ISeries
     public bool? LegendHoverLink { get; set; } 
 
     /// <summary>
-    /// If stack the value.
-    /// On the same category axis, the series with the same stack name would be put on top of each other.
+    /// <![CDATA[
+    /// Name of the stack group.
+    /// Series with the same stack name on the same category axis will be stacked on top of each other.
+    /// See stackStrategy for customizing how values are stacked.
     ///  
-    /// See also stackStrategy on how to customize how values are stacked.
+    /// Notice: Stacking only supports the stacked axis being of type  'value' or 'log' .
+    /// Axes of type 'time' and 'category' are not supported as the stacked axis.
     ///  
-    /// Notice: stack only supports stacking on value and log axis for now.
-    /// time and category axis are not supported.
-    ///  
-    /// The effect of the below example could be seen through stack switching of toolbox on the top right corner:
+    /// You can view the effect of the example below by switching stacks in the toolbox in the top-right corner.
+    /// ]]>
     /// </summary>
     [JsonPropertyName("stack")]
     public string? Stack { get; set; } 
@@ -296,11 +297,11 @@ public partial class LineSeries : ISeries
     /// <summary>
     /// <![CDATA[
     /// Since v5.3.3   
-    /// How to stack values if the stack property has been set.
-    /// Options:   'samesign' : only stack values if the value to be stacked has the same sign as the currently cumulated stacked value.
-    ///  'all' : stack all values, irrespective of the signs of the current or cumulative stacked value.
-    ///  'positive' : only stack positive values.
-    ///  'negative' : only stack negative values.
+    /// Strategy for stacking values, only effective when stack is set.
+    /// Optional values:   'samesign' Only stack values if the value to be stacked has the same sign as the currently cumulated stacked value.
+    /// (Default)  'all' Stack all values regardless of positive or negative.
+    ///  'positive' Only stack positive values.
+    ///  'negative' Only stack negative values.
     /// ]]>
     /// </summary>
     [JsonPropertyName("stackStrategy")]
@@ -311,10 +312,13 @@ public partial class LineSeries : ISeries
     /// <![CDATA[
     /// Since v6.0.0   
     /// Stack order.
-    /// Optional values:   'seriesAsc' (default, stack in series order)  'seriesDesc' (reverse stack order)   
-    /// Note:  stackOrder should be defined for all series with the same stack name.
+    /// Optional values:   'seriesAsc' Stack in series order.
+    /// (Default)  'seriesDesc' Stack in reversed series order.
+    ///   
+    /// Notice:    
+    /// stackOrder should be defined for all series with the same stack name.
     /// If stackOrder is defined for only some of the series, the stack order may change unexpectedly when certain series are hidden (e.g., through legend toggle).
-    ///  
+    ///   
     /// Not supported in polar coordinate system.
     /// ]]>
     /// </summary>

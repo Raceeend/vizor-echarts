@@ -234,7 +234,7 @@ public partial class ItemStyle
     public TextStyle? TextStyle { get; set; } 
 
     /// <summary>
-    /// Fill color of bearish candle stick.
+    /// Fill color of bearish candlestick.
     ///   
     /// Supports setting as solid color using rgb(255,255,255) , rgba(255,255,255,1) , #fff , etc.
     /// Also supports setting as gradient color and pattern fill, see option.color for details
@@ -244,7 +244,7 @@ public partial class ItemStyle
     public Color? Color0 { get; set; } 
 
     /// <summary>
-    /// Border color of bearish candle stick.
+    /// Border color of bearish candlestick.
     ///   
     /// Supports setting as solid color using rgb(255,255,255) , rgba(255,255,255,1) , #fff , etc.
     /// Also supports setting as gradient color and pattern fill, see option.color for details

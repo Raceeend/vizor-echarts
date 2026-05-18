@@ -75,12 +75,4 @@ public partial class AxisLine
     [JsonPropertyName("lineStyle")]
     public LineStyle? LineStyle { get; set; } 
 
-    /// <summary>
-    /// Since v5.0.0   
-    /// Whether to add round caps at the end.
-    /// </summary>
-    [JsonPropertyName("roundCap")]
-    [DefaultValue(false)]
-    public bool? RoundCap { get; set; } 
-
 }

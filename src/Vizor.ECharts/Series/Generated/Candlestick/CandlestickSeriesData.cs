@@ -18,7 +18,9 @@ public partial class CandlestickSeriesData
 
     /// <summary>
     /// Value of data item.
-    ///  [open, close, lowest, highest]  (namely: [opening value, closing value, lowest value, highest value])
+    /// Default dimension order is OCLH .
+    ///  [open, close, lowest, highest]  (namely: [opening value, closing value, lowest value, highest value])  
+    /// To adjust the default dimension order, see series-candlestick.data above.
     /// </summary>
     [JsonPropertyName("value")]
     //TODO: Type Warning: array type 'value' in 'CandlestickSeriesData' will be mapped to List<object>

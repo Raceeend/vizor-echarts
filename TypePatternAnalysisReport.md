@@ -1,11 +1,11 @@
 # Type Pattern Analysis Report
-Generated: 2026-01-18 19:10:10
+Generated: 2026-05-18 18:44:28
 
 ## Summary
 - Total properties analyzed: 39020
-- ✅ Fully supported: 38990 (99,9%)
+- ✅ Fully supported: 38990 (99.9%)
 - ⚠️ Partially supported: 2 (0%)
-- ❌ Unsupported: 28 (0,1%)
+- ❌ Unsupported: 28 (0.1%)
 - 🔍 Requires investigation: 0 (0%)
 
 ## Unsupported Patterns (Sorted by Frequency)
