@@ -5,7 +5,7 @@ namespace Vizor.ECharts.Tests.Unit.Serialization;
 [TestClass]
 public class ComplexFeaturesTests
 {
-    private static JsonSerializerOptions CreateOptions() => new TestChart().GetSerializerOptions();
+    private static JsonSerializerOptions CreateOptions() => new TestChart().GetSerializerOptions(writeIndented: true);
 
     [TestMethod]
     public void SerializesChartWithDataZoomAndFormatter()
