@@ -16,12 +16,15 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   ci:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
@@ -29,11 +32,9 @@ jobs:
           global-json-file: ./global.json
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "18"
-          cache: npm
-          cache-dependency-path: src/Vizor.ECharts/package-lock.json
 
       - name: Restore .NET dependencies
         run: dotnet restore src/Vizor.ECharts.Demo.sln
@@ -45,7 +46,7 @@ jobs:
         run: dotnet test --project src/Vizor.ECharts.Tests/Vizor.ECharts.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=test-results.trx" --results-directory ./artifacts/test-results
 
       - name: Install npm dependencies
-        run: npm ci
+        run: npm install
         working-directory: src/Vizor.ECharts
 
       - name: Build JS bundle with Gulp
@@ -56,7 +57,7 @@ jobs:
         run: dotnet pack src/Vizor.ECharts/Vizor.ECharts.csproj --configuration Release --no-build --output ./artifacts/nuget
 
       - name: Upload NuGet artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: nuget-package
           path: artifacts/nuget/*.nupkg
@@ -64,14 +65,14 @@ jobs:
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: test-results
           path: artifacts/test-results
-          if-no-files-found: warn
+          if-no-files-found: ignore
 
       - name: Upload JS artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: js-bundle
           path: src/Vizor.ECharts/wwwroot/js/*.js
@@ -86,10 +87,10 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Download NuGet artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: nuget-package
           path: ./artifacts/nuget
