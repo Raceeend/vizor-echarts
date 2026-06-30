@@ -1,4 +1,4 @@
-﻿@using Microsoft.JSInterop;
+@using Microsoft.JSInterop;
 @using System.Text.Json;
 @using System.Text.Json.Serialization;
 @using System.Text;
@@ -12,14 +12,17 @@
 <div id="@Id" class="@CssClass" style="@Style"></div>
 
 @code {
-
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        // echarts.init the very first time the component is rendered
-
         if (!firstRender)
+        {
+            if (DataLoader.HasDelegate && dataLoaderNeedsRefresh)
+            {
+                dataLoaderNeedsRefresh = false;
+                await UpdateAsync(executeDataLoader: true);
+            }
             return;
+        }
 
         if (Options == null)
             throw new ArgumentException("Options property must be set");
@@ -39,8 +42,8 @@
         });
 
 #if DEBUG
-		// enable console.log in debug mode
-		await JSRuntime.InvokeVoidAsync("vizorECharts.changeLogging", true);
+        // enable console.log in debug mode
+        await JSRuntime.InvokeVoidAsync("vizorECharts.changeLogging", true);
 #endif
 
         if (DataLoader.HasDelegate)
@@ -68,17 +71,14 @@
             //TODO: also pass DotNetObjectReference.Create(this) ?
             await JSRuntime.InvokeVoidAsync("vizorECharts.initChart", Id, Theme, initOptions, chartOpts, mapOpts, fetchOpts);
         }
-
+        
         // listen for events if needed
         if (OnChartClick.HasDelegate)
         {
             await JSRuntime.InvokeVoidAsync("vizorECharts.attachClickEvent", Id, objRef);
         }
 
-        if (OnDatazoom.HasDelegate)
-        {
-            await JSRuntime.InvokeVoidAsync("vizorECharts.attachDatazoomEvent", Id, objRef);
-        }
+        dataLoaderNeedsRefresh = false;
     }
 
     public override async Task UpdateAsync(bool executeDataLoader = true)

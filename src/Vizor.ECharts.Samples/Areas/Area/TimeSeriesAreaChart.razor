@@ -1,4 +1,4 @@
-﻿@using Vizor.ECharts;
+@using Vizor.ECharts;
 
 <Vizor.ECharts.EChart Options="@options" DataLoader="LoadChartData" Width="800px" Height="400px" OnDatazoom="DatazoomEvent" OnChartClick="OnChartClick" @ref=_chart />
 
@@ -42,83 +42,78 @@
 
     // roughly based on https://echarts.apache.org/examples/en/editor.html?c=area-time-axis
 
-    private ChartOptions options = new()
-        {
-            Tooltip = new()
+	private ChartOptions options = new()
+		{
+			Tooltip = new()
+			{
+				Trigger = TooltipTrigger.Axis,
+                Position = new JavascriptFunction(@"function (pt) {
+                  return [pt[0], '10%'];
+                }")
+			},
+			Toolbox = new()
+			{
+				Feature = new()
+				{
+					DataZoom = new()
+					{
+						YAxisIndex = "none"
+					}
+				}
+			},
+            Title = new()
             {
-                Trigger = TooltipTrigger.Axis,
+                Left = "center",
+                Text = "Time Series Area Chart"
             },
-            Toolbox = new()
-            {
-                Feature = new()
-                {
-                    DataZoom = new()
-                    {
-                        YAxisIndex = "none"
-                    }
-                }
-            },
-            XAxis = new()
-            {
-                Type = AxisType.Time,
-                BoundaryGap = false
-            },
-            YAxis = new()
-            {
-                Type = AxisType.Value,
-                BoundaryGap = new(0, "max")
-            },
-            DataZoom = new()
-            {
-                new InsideDataZoom()
+			XAxis = new()
+			{
+				Type = AxisType.Time,
+				BoundaryGap = false
+			},
+			YAxis = new()
+			{
+				Type = AxisType.Value,
+				BoundaryGap = new(0, "100%")
+			},
+			DataZoom = new()
+			{
+				new InsideDataZoom()
+				{
+					Start = 0,
+					End = 20
+				}, 
+                new SliderDataZoom()
                 {
                     Start = 0,
                     End = 20
-                },
-                new SliderDataZoom(){
-                    Start = 0,
-                    End = 20
                 }
-            },
-            Series = new()
-            {
-                new LineSeries()
-                {
-                    AreaStyle = new() {},
-                    ShowSymbol = false,
-                    Smooth = true,
-                    MarkPoint = new MarkPoint()
-                    {
-                        ItemStyle = new ItemStyle()
-                        {
-                            Opacity = 0.8,
-                            //AreaColor = new Color("#FEB019"),
-                             Color = new Color("#FEB019"),
-                        },
-                        SymbolSize = new NumberArrayOrFunction(40),                        
-                        Data = new() {
-                             new MarkPointData(){
-                                 Name = "Mark",
-                                 Value = 13,
-                                 Coord = new NumberOrStringArray(new NumberOrString(1690950049875), new NumberOrString("max")),                                 
-                             }
-                         }
-                    }
-                }
-            }
-        };
+			},
+			Series = new()
+			{
+				new LineSeries()
+				{
+					AreaStyle = new() {},
+                    Name = "Fake data",
+					ShowSymbol = false,
+					Smooth = true
+				}
+			}
+		};
 
-    private void LoadChartData()
-    {
-        var now = new DateTime(2023, 08, 01);
+	private void LoadChartData()
+	{
+		var now = new DateTime(2023, 08, 01);
+        @* var minutes = 20000; *@
+        var minutes = (24 * 60 * 7); // one week of minute data
+        @* minutes *= 30;  // increase to 30 weeks *@
+		var values = new List<SeriesData<DateTime, int>>(minutes);
+		var rnd = new Random();
 
-        var values = new List<SeriesData<DateTime, int>>(24 * 60 * 7);
-        var rnd = new Random();
-
-        for (int i = 0; i < 24 * 60 * 7; ++i)
-        {
-            values.Add(new(now + TimeSpan.FromMinutes(i), rnd.Next(350)));
-        }
+		for (int i = 0; i < minutes; ++i)
+		{
+			values.Add(new (now + TimeSpan.FromMinutes(i), 150-rnd.Next(350)));
+		}
 
         (options.Series![0] as LineSeries)!.Data = values;
     }
